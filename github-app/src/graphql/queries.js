@@ -20,3 +20,20 @@ export const GET_REPOS = gql`
     }
   }
 `;
+
+export const CREATE_USER_MUTATION = gql`
+  mutation CreateUser($username: String!, $password: String!) {
+    createUser(user: { username: $username, password: $password }) {
+      id
+      username
+    }
+  }
+`;
+
+export const AUTHENTICATE_MUTATION = gql`
+  mutation Authenticate($username: String!, $password: String!) {
+    authenticate(credentials: { username: $username, password: $password }) {
+      accessToken
+    }
+  }
+`;
