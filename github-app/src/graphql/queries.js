@@ -37,3 +37,12 @@ export const AUTHENTICATE_MUTATION = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query Me {
+    me {
+      id
+      username
+    }
+  }
+`;

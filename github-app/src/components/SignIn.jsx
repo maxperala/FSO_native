@@ -3,7 +3,7 @@ import * as yup from "yup";
 import Text from "./Text";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import useSignIn from "../hooks/useSignIn";
-import { AuthStore } from "../config";
+import { useNavigate } from "react-router-native";
 
 const validation = yup.object().shape({
   username: yup
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const navi = useNavigate();
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
       const { data } = await signIn({ username, password });
-      console.log(data);
-      await AuthStore.setAccessToken(data.authenticate.accessToken);
+      navi("/");
     } catch (e) {
       console.log(e);
     }
