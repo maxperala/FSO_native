@@ -57,19 +57,25 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ data }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.topDiv}>
         <View style={styles.topLeftDiv}>
           <Image src={data.ownerAvatarUrl} style={styles.image} />
         </View>
         <View style={styles.topRightDiv}>
-          <Text color={"textPrimary"} fontSize={"subheading"}>
+          <Text color={"textPrimary"} fontSize={"subheading"} testID="name">
             {data.fullName}
           </Text>
-          <Text color={"textSecondary"}>{data.description}</Text>
+          <Text color={"textSecondary"} testID="desc">
+            {data.description}
+          </Text>
           <View style={styles.lngSegment}>
             <View style={styles.lng}>
-              <Text fontWeight={"bold"} style={{ color: "white" }}>
+              <Text
+                fontWeight={"bold"}
+                style={{ color: "white" }}
+                testID="lang"
+              >
                 {data.language}
               </Text>
             </View>
@@ -81,23 +87,27 @@ const RepositoryItem = ({ data }) => {
       </View>
       <View style={styles.bottomDiv}>
         <DataItem
+          testID="stars"
           name="Stars"
           amount={data.stargazersCount}
           style={styles.bottomSegment}
         />
 
         <DataItem
+          testID="forks"
           name="Forks"
           amount={data.forksCount}
           style={styles.bottomSegment}
         />
         <DataItem
+          testID="reviews"
           name="Reviews"
           amount={data.reviewCount}
           style={styles.bottomSegment}
         />
 
         <DataItem
+          testID="rating"
           name="Rating"
           amount={data.ratingAverage}
           style={styles.bottomSegment}
@@ -106,17 +116,5 @@ const RepositoryItem = ({ data }) => {
     </View>
   );
 };
-
-/*
-        <View>
-            <Text>Full name: {data.fullName}</Text>
-            <Text>Description: {data.description}</Text>
-            <Text>Language: {data.language}</Text>
-            <Text>Stars: {data.stargazersCount}</Text>
-            <Text>Forks: {data.forksCount}</Text>
-            <Text>Reviews: {data.reviewCount}</Text>
-            <Text>Rating: {data.ratingAverage}</Text>
-        </View>
-*/
 
 export default RepositoryItem;

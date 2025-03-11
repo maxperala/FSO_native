@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const { data } = useQuery(ME);
-  console.log(data.me);
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const AppBar = () => {
         <Link to="/" style={styles.btn}>
           <Text style={styles.text}>Repositories</Text>
         </Link>
-        {data.me ? logoutBtn() : loginBtn()}
+        {data?.me ? logoutBtn() : loginBtn()}
       </ScrollView>
     </View>
   );

@@ -48,6 +48,58 @@ const styles = StyleSheet.create({
   },
 });
 
+export const SignInContainer = ({ onSubmit }) => {
+  const formik = useFormik({
+    initialValues: initial,
+    onSubmit,
+    validationSchema: validation,
+  });
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={[
+          styles.input,
+          { borderColor: formik.errors.username ? "red" : "grey" },
+        ]}
+        placeholder="Username"
+        value={formik.values.username}
+        testID="username"
+        onChangeText={formik.handleChange("username")}
+      />
+      {formik.touched.username && formik.errors.username && (
+        <Text style={{ color: "red" }}>{formik.errors.username}</Text>
+      )}
+      <TextInput
+        style={[
+          styles.input,
+          { borderColor: formik.errors.password ? "red" : "grey" },
+        ]}
+        placeholder="Password"
+        testID="password"
+        value={formik.values.password}
+        onChangeText={formik.handleChange("password")}
+        secureTextEntry
+      />
+      {formik.touched.password && formik.errors.password && (
+        <Text style={{ color: "red" }}>{formik.errors.password}</Text>
+      )}
+      <Pressable
+        style={styles.btn}
+        onPress={formik.handleSubmit}
+        testID="submitButton"
+      >
+        <Text
+          style={{ color: "white" }}
+          fontSize="subheading"
+          fontWeight="bold"
+        >
+          Sign In
+        </Text>
+      </Pressable>
+    </View>
+  );
+};
+
 const SignIn = () => {
   const [signIn] = useSignIn();
   const navi = useNavigate();
@@ -60,50 +112,8 @@ const SignIn = () => {
       console.log(e);
     }
   };
-  const formik = useFormik({
-    initialValues: initial,
-    onSubmit,
-    validationSchema: validation,
-  });
 
-  return (
-    <View style={styles.container}>
-      <TextInput
-        style={[
-          styles.input,
-          { borderColor: formik.errors.username ? "red" : "grey" },
-        ]}
-        placeholder="Username"
-        value={formik.values.username}
-        onChangeText={formik.handleChange("username")}
-      />
-      {formik.touched.username && formik.errors.username && (
-        <Text style={{ color: "red" }}>{formik.errors.username}</Text>
-      )}
-      <TextInput
-        style={[
-          styles.input,
-          { borderColor: formik.errors.password ? "red" : "grey" },
-        ]}
-        placeholder="Password"
-        value={formik.values.password}
-        onChangeText={formik.handleChange("password")}
-        secureTextEntry
-      />
-      {formik.touched.password && formik.errors.password && (
-        <Text style={{ color: "red" }}>{formik.errors.password}</Text>
-      )}
-      <Pressable style={styles.btn} onPress={formik.handleSubmit}>
-        <Text
-          style={{ color: "white" }}
-          fontSize="subheading"
-          fontWeight="bold"
-        >
-          Sign In
-        </Text>
-      </Pressable>
-    </View>
-  );
+  return <SignInContainer onSubmit={onSubmit} />;
 };
 
 export default SignIn;
