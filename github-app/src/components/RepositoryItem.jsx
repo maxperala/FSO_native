@@ -1,6 +1,8 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import Text from "./Text";
 import DataItem from "./DataItem";
+import * as Linking from "expo-linking";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,10 +10,13 @@ const styles = StyleSheet.create({
     padding: "5%",
     paddingTop: "2%",
     paddingBottom: "2%",
+    width: "100%",
+    backgroundColor: "white",
+    minHeight: 230,
   },
   topDiv: {
-    flex: 2,
     flexDirection: "row",
+    flex: 1,
   },
   topLeftDiv: {
     flex: 1,
@@ -53,14 +58,28 @@ const styles = StyleSheet.create({
     padding: "2%",
     borderRadius: 10,
   },
+  openBtn: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "blue",
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 10,
+    borderRadius: 6,
+  },
+  openText: {
+    color: "white",
+  },
 });
 
-const RepositoryItem = ({ data }) => {
-  return (
-    <View style={styles.container} testID="repositoryItem">
+const RepositoryItem = ({ data, single = false }) => {
+  const navigate = useNavigate();
+
+  const content = (
+    <>
       <View style={styles.topDiv}>
         <View style={styles.topLeftDiv}>
-          <Image src={data.ownerAvatarUrl} style={styles.image} />
+          <Image source={{ uri: data.ownerAvatarUrl }} style={styles.image} />
         </View>
         <View style={styles.topRightDiv}>
           <Text color={"textPrimary"} fontSize={"subheading"} testID="name">
@@ -79,7 +98,6 @@ const RepositoryItem = ({ data }) => {
                 {data.language}
               </Text>
             </View>
-
             <View style={{ flex: 1 }} />
             <View style={{ flex: 1 }} />
           </View>
@@ -92,7 +110,6 @@ const RepositoryItem = ({ data }) => {
           amount={data.stargazersCount}
           style={styles.bottomSegment}
         />
-
         <DataItem
           testID="forks"
           name="Forks"
@@ -105,7 +122,6 @@ const RepositoryItem = ({ data }) => {
           amount={data.reviewCount}
           style={styles.bottomSegment}
         />
-
         <DataItem
           testID="rating"
           name="Rating"
@@ -113,6 +129,29 @@ const RepositoryItem = ({ data }) => {
           style={styles.bottomSegment}
         />
       </View>
+    </>
+  );
+
+  return (
+    <View style={[styles.container]} testID="repositoryItem">
+      {single ? (
+        <>
+          {content}
+          <Pressable
+            onPress={() => {
+              Linking.openURL(data.url);
+            }}
+          >
+            <View style={styles.openBtn}>
+              <Text style={styles.openText}>Open in GitHub</Text>
+            </View>
+          </Pressable>
+        </>
+      ) : (
+        <Pressable onPress={() => navigate(`/repos/${data.id}`)}>
+          {content}
+        </Pressable>
+      )}
     </View>
   );
 };

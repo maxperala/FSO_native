@@ -10,6 +10,7 @@ export const GET_REPOS = gql`
           description
           id
           language
+          url
           name
           ownerAvatarUrl
           ratingAverage
