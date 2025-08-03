@@ -57,6 +57,9 @@ const AppBar = () => {
         <Link to="/" style={styles.btn}>
           <Text style={styles.text}>Repositories</Text>
         </Link>
+        <Link to="/review" style={styles.btn}>
+          <Text style={styles.text}>Review</Text>
+        </Link>
         {data?.me ? logoutBtn() : loginBtn()}
       </ScrollView>
     </View>

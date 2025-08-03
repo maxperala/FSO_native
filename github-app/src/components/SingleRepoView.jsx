@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useParams } from "react-router-native";
 import useRepositories from "../hooks/useRepositories";
 import { useMemo } from "react";
@@ -32,10 +32,18 @@ const SingleRepoView = () => {
   console.log(reviews);
 
   if (!id) {
-    return <View style={styles.loadContainer}>Repo not found</View>;
+    return (
+      <View style={styles.loadContainer}>
+        <Text>Repo not found</Text>
+      </View>
+    );
   }
   if (!repoData || !reviews)
-    return <View style={styles.loadContainer}>Loading...</View>;
+    return (
+      <View style={styles.loadContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
 
   return (
     <View style={styles.container}>

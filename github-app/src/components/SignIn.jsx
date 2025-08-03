@@ -65,6 +65,7 @@ export const SignInContainer = ({ onSubmit }) => {
         value={formik.values.username}
         testID="username"
         onChangeText={formik.handleChange("username")}
+        autoCapitalize="none"
       />
       {formik.touched.username && formik.errors.username && (
         <Text style={{ color: "red" }}>{formik.errors.username}</Text>
@@ -79,6 +80,7 @@ export const SignInContainer = ({ onSubmit }) => {
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
         secureTextEntry
+        autoCapitalize="none"
       />
       {formik.touched.password && formik.errors.password && (
         <Text style={{ color: "red" }}>{formik.errors.password}</Text>
