@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Review = ({ data }) => {
+const Review = ({ data, repoInsteadOfUsername = false }) => {
+  if (!data) return;
   const date = new Date(data.createdAt);
   return (
     <View style={styles.container}>
@@ -46,7 +47,11 @@ const Review = ({ data }) => {
           </Text>
         </View>
         <View style={styles.NameRating}>
-          <Text fontWeight="bold">{data.user.username}</Text>
+          {repoInsteadOfUsername ? (
+            <Text fontWeight="bold">{data.repository.fullName}</Text>
+          ) : (
+            <Text fontWeight="bold">{data.user.username}</Text>
+          )}
           <Text fontWeight="bold">{date.toDateString()}</Text>
         </View>
       </View>

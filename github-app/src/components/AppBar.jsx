@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-native";
 import { useApolloClient, useQuery } from "@apollo/client";
 import { ME } from "../graphql/queries";
 import useAuthStorage from "../hooks/useAuthStorage";
+import MyReviews from "./MyReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -57,9 +58,16 @@ const AppBar = () => {
         <Link to="/" style={styles.btn}>
           <Text style={styles.text}>Repositories</Text>
         </Link>
-        <Link to="/review" style={styles.btn}>
-          <Text style={styles.text}>Review</Text>
-        </Link>
+        {data?.me && (
+          <>
+            <Link to="/review" style={styles.btn}>
+              <Text style={styles.text}>Review</Text>
+            </Link>
+            <Link to="/myreviews" style={styles.btn}>
+              <Text style={styles.text}>My Reviews</Text>
+            </Link>
+          </>
+        )}
         {data?.me ? logoutBtn() : loginBtn()}
         {data?.me ? null : (
           <Link to="/signup" style={styles.btn}>
