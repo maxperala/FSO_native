@@ -61,6 +61,11 @@ const AppBar = () => {
           <Text style={styles.text}>Review</Text>
         </Link>
         {data?.me ? logoutBtn() : loginBtn()}
+        {data?.me ? null : (
+          <Link to="/signup" style={styles.btn}>
+            <Text style={styles.text}>Sign up</Text>
+          </Link>
+        )}
       </ScrollView>
     </View>
   );
