@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet, Pressable } from "react-native";
+import { FlatList, View, StyleSheet, Pressable, TextInput } from "react-native";
 import Text from "./Text";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
@@ -16,19 +16,29 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
   },
+  search: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 8,
+    marginVertical: 8,
+    backgroundColor: "white",
+    fontSize: 16,
+    justifyContent: "center",
+  },
   filter: {
-    height: "5%",
+    height: 40,
     display: "flex",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "black",
-    padding: 5,
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 2,
-    marginRight: 2,
-    borderRadius: 10,
-    backgroundColor: "rgba(128, 128, 128, 0.2)",
+    borderColor: "#ccc",
+    paddingHorizontal: 12,
+    marginHorizontal: 8,
+    marginVertical: 8,
+    borderRadius: 8,
+    backgroundColor: "white",
   },
 });
 
@@ -44,12 +54,13 @@ export const RepositoryListContainer = ({
   repositories,
   filter,
   setFilter,
+  searchWord,
+  setSearchWord,
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
 
-  // Reverse the array for "lowest" rating to get descending order
   const sortedRepositoryNodes =
     filter === "RATING_AVERAGE_DESC"
       ? [...repositoryNodes].reverse()
@@ -59,6 +70,14 @@ export const RepositoryListContainer = ({
 
   return (
     <View style={styles.container}>
+      <View style={styles.search}>
+        <TextInput
+          value={searchWord}
+          onChangeText={setSearchWord}
+          autoCapitalize="none"
+          placeholder="Search for a repo..."
+        />
+      </View>
       <Pressable
         style={styles.filter}
         onPress={() => setFilterMenuOpen(!filterMenuOpen)}
@@ -83,16 +102,19 @@ export const RepositoryListContainer = ({
 
 const RepositoryList = () => {
   const [filter, setFilter] = useState("CREATED_AT");
+  const [searchWord, setSearchWord] = useState("");
 
   // Just reverse for lowest :)
   const orderBy = filter === "RATING_AVERAGE_DESC" ? "RATING_AVERAGE" : filter;
-  const { repositories } = useRepositories(orderBy);
+  const { repositories } = useRepositories(orderBy, searchWord || undefined);
 
   return (
     <RepositoryListContainer
       repositories={repositories}
       filter={filter}
       setFilter={setFilter}
+      searchWord={searchWord}
+      setSearchWord={setSearchWord}
     />
   );
 };
